@@ -2,8 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const app = express();
-// make var item global so that it can be accessed by all functions
-var items = ["Buy food", "Cook food"];
+// make let item global so that it can be accessed by all functions
+let items = ["Buy food", "Cook food"];
 app.set('view engine', 'ejs');
 // required to use body-parser
 app.use(bodyParser.urlencoded({
@@ -11,22 +11,22 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get("/", function(req, res) {
-  var today = new Date();
-  var options = {
+  let today = new Date();
+  let options = {
     weekday: "long",
     day: "numeric",
     month: "long"
   };
 
-  var day = today.toLocaleDateString("en-US", options);
+  let day = today.toLocaleDateString("en-US", options);
 
   res.render("list", {
     kindOfDay: day,
     newListItems: items
   });
 
-  // var currentDay = today.getDay();
-  // var day = "";
+  // let currentDay = today.getDay();
+  // let day = "";
   // check which day of the week it is
   // switch (currentDay) {
   //   case 0:
@@ -65,7 +65,7 @@ app.get("/", function(req, res) {
 });
 
 app.post("/", function(req, res) {
-  var item = req.body.newItem;
+  let item = req.body.newItem;
   items.push(item);
   res.redirect("/");
   // console.log("The user entered: " + req.body.newItem);
