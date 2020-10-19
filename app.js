@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const app = express();
 // make let item global so that it can be accessed by all functions
 let items = ["Buy food", "Cook food"];
+let workItems = [];
 app.set('view engine', 'ejs');
 // required to use body-parser
 app.use(bodyParser.urlencoded({
@@ -22,7 +23,7 @@ app.get("/", function(req, res) {
   let day = today.toLocaleDateString("en-US", options);
 
   res.render("list", {
-    kindOfDay: day,
+    listTitle: day,
     newListItems: items
   });
 
@@ -67,11 +68,29 @@ app.get("/", function(req, res) {
 
 app.post("/", function(req, res) {
   let item = req.body.newItem;
-  items.push(item);
-  res.redirect("/");
+  if (req.body.list === "Work") {
+    workItems.push(item);
+    res.redirect("/work");
+  } else {
+    items.push(item);
+    res.redirect("/");
+  }
   // console.log("The user entered: " + req.body.newItem);
   // need to fully initialize body-parser to get to the form submission
 });
+
+app.get("/work", function(req, res) {
+  res.render("list", {
+    listTitle: "Work List",
+    newListItems: workItems
+  })
+});
+
+app.post("/work", function(req, res) {
+  let item = req.body.newItem;
+  workItems.push(item);
+  res.redirect("/work");
+})
 
 app.listen(3000, function() {
   console.log("Server started at port 3000.");
