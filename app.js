@@ -90,7 +90,11 @@ app.post("/work", function(req, res) {
   let item = req.body.newItem;
   workItems.push(item);
   res.redirect("/work");
-})
+});
+
+app.get("/about", function(req, res) {
+  res.render("about");
+});
 
 app.listen(3000, function() {
   console.log("Server started at port 3000.");
