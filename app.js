@@ -3,11 +3,9 @@ const bodyParser = require("body-parser");
 const date = require(__dirname + "/date");
 
 const app = express();
-// make let item global so that it can be accessed by all functions
-let items = ["Buy food", "Cook food"];
-let workItems = [];
+const items = ["Buy food", "Cook food"];
+const workItems = [];
 app.set('view engine', 'ejs');
-// required to use body-parser
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -15,7 +13,7 @@ app.use(express.static("public"));
 
 app.get("/", function(req, res) {
 
-  let day = date.getDate();
+  const day = date.getDate();
 
   res.render("list", {
     listTitle: day,
@@ -24,7 +22,7 @@ app.get("/", function(req, res) {
 });
 
 app.post("/", function(req, res) {
-  let item = req.body.newItem;
+  const item = req.body.newItem;
   if (req.body.list === "Work") {
     workItems.push(item);
     res.redirect("/work");
@@ -42,7 +40,7 @@ app.get("/work", function(req, res) {
 });
 
 app.post("/work", function(req, res) {
-  let item = req.body.newItem;
+  const item = req.body.newItem;
   workItems.push(item);
   res.redirect("/work");
 });
